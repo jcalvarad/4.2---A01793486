@@ -1,6 +1,5 @@
 """This module ccounts the words from a list of words read from a file."""
 
-
 import sys
 import time
 
@@ -12,8 +11,9 @@ def read_words_from_file(filename):
             for line in file:
                 # Splitting by any whitespace and ignoring case by converting to lowercase
                 words.extend(line.lower().strip().split())
-    except Exception as e:
+    except (IOError, UnicodeDecodeError) as e:
         print(f"Error reading file: {e}")
+        return []
     return words
 
 def count_words(words):
@@ -37,6 +37,8 @@ def main(filename):
     """Main function to read, count words, and output results."""
     start_time = time.time()
     words = read_words_from_file(filename)
+    if not words:  # Early return if file reading fails
+        return
     word_count = count_words(words)
     for word, count in sorted(word_count.items(), key=lambda item: -item[1]):
         print(f"{word}: {count}")
