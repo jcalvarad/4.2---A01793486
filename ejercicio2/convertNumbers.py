@@ -1,3 +1,5 @@
+"""This module converts numbers to binary and hex from a list of numbers read from a file."""
+
 import sys
 import time
 
